@@ -1,14 +1,14 @@
 resource "google_organization_iam_policy" "organization" {
-  org_id      = "1234567890"
+  org_id      = GOOGLE_ORG_ID
   policy_data = data.google_iam_policy.admin.policy_data
 }
 
 data "google_iam_policy" "admin" {
   binding {
-    role = "roles/editor"
+    role = GOOGLE_IAM_ROLE
 
     members = [
-      "user:jane@example.com",
+      GOOGLE_IAM_MEMBER,
     ]
   }
 }

@@ -1,38 +1,38 @@
 resource "kubernetes_namespace" "default" {
   metadata {
-    name = "Gomez-space"
+    name = K8S_NAMESPACE_NAME
   }
 }
 
 resource "kubernetes_deployment" "api" {
   metadata {
-    name      = "time-checker-api"
+    name      = K8S_DEPLOYMENT_NAME
     namespace = kubernetes_namespace.default.metadata[0].name
   }
 
   spec {
-    replicas = 1
+    replicas = K8S_REPLICAS
 
     selector {
       match_labels = {
-        app = "time-checker-api"
+        app = K8S_APP_NAME
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "time-checker-api"
+          app = K8S_APP_NAME
         }
       }
 
       spec {
         container {
-          image = "gcr.io/your-project-id/my-api:latest"
-          name  = "time-checker-api"
+          image = K8S_CONTAINER_IMAGE
+          name  = K8S_CONTAINER_NAME
 
           port {
-            container_port = 5000
+            container_port = K8S_CONTAINER_PORT
           }
         }
       }
@@ -42,19 +42,19 @@ resource "kubernetes_deployment" "api" {
 
 resource "kubernetes_service" "api" {
   metadata {
-    name      = "time-chceker-api"
+    name      = K8S_SERVICE_NAME
     namespace = kubernetes_namespace.default.metadata[0].name
   }
 
   spec {
     selector = {
-      app = "time-checker-api"
+      app = K8S_APP_NAME
     }
 
     port {
       name        = "http"
-      port        = 80
-      target_port = 8000
+      port        = K8S_SERVICE_PORT
+      target_port = K8S_SERVICE_TARGET_PORT
     }
 
     type = "LoadBalancer"

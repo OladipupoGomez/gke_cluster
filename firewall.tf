@@ -1,5 +1,5 @@
 resource "google_compute_firewall" "default" {
-  name    = "Gomez-firewall"
+  name    = GCP_FIREWALL_NAME
   network = google_compute_network.default.name
 
   allow {
@@ -7,13 +7,13 @@ resource "google_compute_firewall" "default" {
   }
 
   allow {
-    protocol = ["tcp", "http"]
-    ports    = ["80", "8080",]
+    protocol = GCP_FIREWALL_PROTOCOLS
+    ports    = GCP_FIREWALL_PORTS
   }
 
-  source_tags = ["web"]
+  source_tags = GCP_FIREWALL_SOURCE_TAGS
 }
 
 resource "google_compute_network" "default" {
-  name = "Gomez-network"
+  name = GCP_NETWORK_NAME
 }

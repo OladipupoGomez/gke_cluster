@@ -1,16 +1,16 @@
 resource "google_compute_network" "net" {
-  name = "Gomez-network"
+  name = GCP_NETWORK_NAME
 }
 
 resource "google_compute_subnetwork" "subnet" {
-  name          = "Gomez-subnetwork"
+  name          = GCP_SUBNETWORK_NAME
   network       = google_compute_network.net.id
-  ip_cidr_range = "10.0.0.0/16"
-  region        = "us-central1"
+  ip_cidr_range = GCP_SUBNETWORK_CIDR_RANGE
+  region        = GCP_REGION
 }
 
 resource "google_compute_router" "router" {
-  name    = "Gomez-router"
+  name    = GCP_ROUTER_NAME
   region  = google_compute_subnetwork.subnet.region
   network = google_compute_network.net.id
 }
@@ -22,7 +22,7 @@ resource "google_compute_address" "address" {
 }
 
 resource "google_compute_router_nat" "nat_manual" {
-  name   = "Gomez-router-nat"
+  name   = GCP_ROUTER_NAT_NAME
   router = google_compute_router.router.name
   region = google_compute_router.router.region
 
@@ -32,6 +32,6 @@ resource "google_compute_router_nat" "nat_manual" {
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
   subnetwork {
     name                    = google_compute_subnetwork.subnet.id
-    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+    source_ip_ranges_to_nat = GCP_NAT_SOURCE_IP_RANGES
   }
 }
