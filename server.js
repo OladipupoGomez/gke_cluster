@@ -8,7 +8,7 @@ app.get('/time', (req, res) => {
   res.json({ time });
 });
 
-const port = 8000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
