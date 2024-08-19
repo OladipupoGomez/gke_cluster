@@ -26,13 +26,14 @@ This project demonstrates how to deploy a simple time API to Google Cloud Platfo
 
 1. Clone the repository.
 2. Build the Docker image: `docker build -t time-checker-api .`
-3. Run the Docker container: `docker run -p 8000:8000 time-checker-api`
-4. Access the API at `http://localhost:8000/time`.
+3. Create a .env file and specify a port number
+4. Run the Docker container: `docker run -e PORT=(port number set in env) -p (port number):(port number) time-checker-api
+**Example: docker run -e PORT=8000 -p 8000:8000 time-checker-api**
+5. Access the API at `http://localhost:(port number/time)`.
 
 ## Deployed API Endpoint
 
-[Provide the public URL here]
 
 ## GitHub Actions Workflow
 
-[Provide the GitHub Actions workflow run link here]
+
